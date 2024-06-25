@@ -1,5 +1,8 @@
 package presentacion;
 
+import javax.swing.JInternalFrame;
+import javax.swing.JOptionPane;
+
 public class MenuPrincipalUI extends javax.swing.JFrame {
 
     private LoginUI login;
@@ -24,6 +27,7 @@ public class MenuPrincipalUI extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         mnuLogin = new javax.swing.JMenu();
         mnuIngresar = new javax.swing.JMenuItem();
+        mnuCerrarSesion = new javax.swing.JMenuItem();
         mnuSalir = new javax.swing.JMenuItem();
         mnuUsuarios = new javax.swing.JMenu();
         mnuAdminUser = new javax.swing.JMenuItem();
@@ -56,6 +60,15 @@ public class MenuPrincipalUI extends javax.swing.JFrame {
             }
         });
         mnuLogin.add(mnuIngresar);
+
+        mnuCerrarSesion.setText("Cerrar Sesión");
+        mnuCerrarSesion.setEnabled(false);
+        mnuCerrarSesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuCerrarSesionActionPerformed(evt);
+            }
+        });
+        mnuLogin.add(mnuCerrarSesion);
 
         mnuSalir.setText("Salir");
         mnuSalir.addActionListener(new java.awt.event.ActionListener() {
@@ -171,6 +184,23 @@ public class MenuPrincipalUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_mnuAdminMesasActionPerformed
 
+    private void mnuCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCerrarSesionActionPerformed
+        // TODO add your handling code here:
+        JInternalFrame[] allFrames = escritorio.getAllFrames();
+        for (JInternalFrame frame : allFrames) {
+            frame.dispose();
+        }
+        mnuIngresar.setEnabled(true);
+        mnuCerrarSesion.setEnabled(false);
+        mnuUsuarios.setEnabled(false);
+        mnuPlatos.setEnabled(false);
+        mnuPedidos.setEnabled(false);
+        mnuMesas.setEnabled(false);
+        mnuFacturacion.setEnabled(false);
+        
+        JOptionPane.showMessageDialog(this, "Usuario se desconectó correctamente.");
+    }//GEN-LAST:event_mnuCerrarSesionActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -210,6 +240,10 @@ public class MenuPrincipalUI extends javax.swing.JFrame {
     public void habilitarMenuIngresar(boolean habilitar) {
         mnuIngresar.setEnabled(habilitar);
     }
+    
+    public void habilitarMenuCerrarSesion(boolean habilitar) {
+        mnuCerrarSesion.setEnabled(habilitar);
+    }
 
     public void habilitarMenuUsuario(boolean habilitar) {
         mnuUsuarios.setEnabled(habilitar);
@@ -236,6 +270,7 @@ public class MenuPrincipalUI extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem mnuAdminMesas;
     private javax.swing.JMenuItem mnuAdminUser;
+    private javax.swing.JMenuItem mnuCerrarSesion;
     private javax.swing.JMenu mnuFacturacion;
     private javax.swing.JMenuItem mnuIngresar;
     private javax.swing.JMenu mnuLogin;

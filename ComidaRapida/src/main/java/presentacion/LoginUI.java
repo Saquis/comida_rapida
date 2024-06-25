@@ -149,7 +149,6 @@ public class LoginUI extends javax.swing.JInternalFrame {
         }
 
         usuario.setLogin(txtLogin.getText());
-        //usuario.setPassword(Encriptar.convertirSHA256(txtPassword.getPassword().toString()));
         usuario.setPassword(Encriptar.convertirSHA256(String.valueOf(txtPassword.getPassword())));
         rol = (Rol) cmbRol.getSelectedItem();
 
@@ -181,6 +180,7 @@ public class LoginUI extends javax.swing.JInternalFrame {
     private void permisos(String rol) {
         if (rol.equals("Administrador")) {
             mainFrame.habilitarMenuIngresar(false);
+            mainFrame.habilitarMenuCerrarSesion(true);
             mainFrame.habilitarMenuUsuario(true);
             mainFrame.habilitarMenuPlatos(true);
             mainFrame.habilitarMenuPedidos(true);
@@ -189,6 +189,7 @@ public class LoginUI extends javax.swing.JInternalFrame {
         }
         if (rol.equals("Mesero")) {
             mainFrame.habilitarMenuIngresar(false);
+            mainFrame.habilitarMenuCerrarSesion(true);
             mainFrame.habilitarMenuUsuario(false);
             mainFrame.habilitarMenuPlatos(false);
             mainFrame.habilitarMenuPedidos(true);
@@ -197,6 +198,7 @@ public class LoginUI extends javax.swing.JInternalFrame {
         }
         if (rol.equals("Cocina")) {
             mainFrame.habilitarMenuIngresar(false);
+            mainFrame.habilitarMenuCerrarSesion(true);
             mainFrame.habilitarMenuUsuario(false);
             mainFrame.habilitarMenuPlatos(true);
             mainFrame.habilitarMenuPedidos(true);
@@ -205,6 +207,7 @@ public class LoginUI extends javax.swing.JInternalFrame {
         }
         if (rol.equals("Caja")) {
             mainFrame.habilitarMenuIngresar(false);
+            mainFrame.habilitarMenuCerrarSesion(true);
             mainFrame.habilitarMenuUsuario(false);
             mainFrame.habilitarMenuPlatos(false);
             mainFrame.habilitarMenuPedidos(true);

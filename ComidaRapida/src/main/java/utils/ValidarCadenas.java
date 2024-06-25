@@ -50,7 +50,7 @@ public class ValidarCadenas {
                 String texto = textField.getText();
 
                 // Chequea que sean letras
-                if ((!Character.isLetter(c) && !Character.isISOControl(c)) || texto.length() >= caracteres) {
+                if ((!Character.isLetter(c) && !Character.isISOControl(c) && c != ' ') || texto.length() >= caracteres) {
                     e.consume();
                 }
             }
