@@ -1,20 +1,30 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
- */
 package presentacion;
 
-/**
- *
- * @author dmejiac
- */
+import datos.Rol;
+import datos.Usuario;
+import java.util.ArrayList;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+import logica.FunRol;
+import logica.FunUsuario;
+import utils.Encriptar;
+import utils.ValidarCadenas;
+
 public class LoginUI extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form Login
-     */
-    public LoginUI() {
+    private Usuario usuario;
+    private Rol rol;
+    private FunUsuario funusuario = new FunUsuario();
+    private FunRol funrol = new FunRol();
+    private DefaultComboBoxModel valores_combo = new DefaultComboBoxModel();
+    private MenuPrincipalUI mainFrame;
+
+    public LoginUI(MenuPrincipalUI mainFrame) {
         initComponents();
+        this.mainFrame = mainFrame;
+        cargar_combo();
+        ValidarCadenas.validar_input_letrasnumeros(txtLogin, 10);
+        ValidarCadenas.validar_longitud_password(txtPassword, 10);
     }
 
     /**
@@ -26,47 +36,192 @@ public class LoginUI extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
+        txtLogin = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        cmbRol = new javax.swing.JComboBox<>();
+        jSeparator1 = new javax.swing.JSeparator();
+        btnCancelar = new javax.swing.JButton();
+        btnIngresar = new javax.swing.JButton();
+        txtPassword = new javax.swing.JPasswordField();
 
-        jTextField1.setText("jTextField1");
+        setBorder(null);
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
+        setTitle("Ingreso al Sistema");
 
-        jTextField2.setText("jTextField2");
+        jLabel1.setText("Login:");
 
-        jTextField3.setText("jTextField3");
+        jLabel2.setText("Password:");
+
+        jLabel3.setText("Rol:");
+
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
+
+        btnIngresar.setText("Ingresar");
+        btnIngresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIngresarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(100, 100, 100)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(223, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(116, Short.MAX_VALUE)
+                        .addComponent(btnIngresar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnCancelar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jSeparator1)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtLogin)
+                                    .addComponent(cmbRol, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(txtPassword))))))
+                .addGap(33, 33, 33))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(44, 44, 44)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
-                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(118, Short.MAX_VALUE))
+                .addGap(21, 21, 21)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(txtLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(cmbRol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCancelar)
+                    .addComponent(btnIngresar))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
+        // TODO add your handling code here:
+        usuario = new Usuario();
+        rol = new Rol();
+
+        if (txtLogin.getText().length() == 0) {
+            JOptionPane.showMessageDialog(this, "Debes ingresar el login.");
+            txtLogin.requestFocus();
+            return;
+        }
+        if (txtPassword.getPassword().length == 0) {
+            JOptionPane.showMessageDialog(this, "Debes ingresar el password.");
+            txtPassword.requestFocus();
+            return;
+        }
+
+        if (cmbRol.getSelectedIndex() == 0) {
+            JOptionPane.showMessageDialog(this, "Debes seleccionar un rol.");
+            cmbRol.requestFocus();
+            return;
+        }
+
+        usuario.setLogin(txtLogin.getText());
+        //usuario.setPassword(Encriptar.convertirSHA256(txtPassword.getPassword().toString()));
+        usuario.setPassword(Encriptar.convertirSHA256(String.valueOf(txtPassword.getPassword())));
+        rol = (Rol) cmbRol.getSelectedItem();
+
+        if (funusuario.validar_login(usuario, rol)) {
+            JOptionPane.showMessageDialog(this, "Bienvenido al Sistema.");
+            permisos(rol.getNombre());
+        } else {
+            JOptionPane.showMessageDialog(this, "Usuario, Rol o Password Incorrecto.");
+        }
+        this.dispose();
+    }//GEN-LAST:event_btnIngresarActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void cargar_combo() {
+        ArrayList<Rol> lista = funrol.mostrar_roles();
+
+        cmbRol.setModel(valores_combo);
+        valores_combo.addElement(new Rol(0, "Selecciona un rol"));
+
+        for (Rol r : lista) {
+            valores_combo.addElement(r);
+        }
+    }
+
+    private void permisos(String rol) {
+        if (rol.equals("Administrador")) {
+            mainFrame.habilitarMenuIngresar(false);
+            mainFrame.habilitarMenuUsuario(true);
+            mainFrame.habilitarMenuPlatos(true);
+            mainFrame.habilitarMenuPedidos(true);
+            mainFrame.habilitarMenuMesas(true);
+            mainFrame.habilitarMenuFacturacion(true);
+        }
+        if (rol.equals("Mesero")) {
+            mainFrame.habilitarMenuIngresar(false);
+            mainFrame.habilitarMenuUsuario(false);
+            mainFrame.habilitarMenuPlatos(false);
+            mainFrame.habilitarMenuPedidos(true);
+            mainFrame.habilitarMenuMesas(true);
+            mainFrame.habilitarMenuFacturacion(false);
+        }
+        if (rol.equals("Cocina")) {
+            mainFrame.habilitarMenuIngresar(false);
+            mainFrame.habilitarMenuUsuario(false);
+            mainFrame.habilitarMenuPlatos(true);
+            mainFrame.habilitarMenuPedidos(true);
+            mainFrame.habilitarMenuMesas(false);
+            mainFrame.habilitarMenuFacturacion(false);
+        }
+        if (rol.equals("Caja")) {
+            mainFrame.habilitarMenuIngresar(false);
+            mainFrame.habilitarMenuUsuario(false);
+            mainFrame.habilitarMenuPlatos(false);
+            mainFrame.habilitarMenuPedidos(true);
+            mainFrame.habilitarMenuMesas(false);
+            mainFrame.habilitarMenuFacturacion(true);
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnIngresar;
+    private javax.swing.JComboBox<Rol> cmbRol;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JTextField txtLogin;
+    private javax.swing.JPasswordField txtPassword;
     // End of variables declaration//GEN-END:variables
 }

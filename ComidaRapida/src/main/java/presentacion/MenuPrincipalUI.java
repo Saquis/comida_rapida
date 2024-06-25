@@ -1,20 +1,14 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package presentacion;
-
 
 public class MenuPrincipalUI extends javax.swing.JFrame {
 
     private LoginUI login;
     private Mesas mesas;
-    /**
-     * Creates new form MenuPrincipal
-     */
+    private UsuarioUI usuario;
+
     public MenuPrincipalUI() {
         initComponents();
-      //  mnuMesas = new javax.swing.JMenu();
+        //  mnuMesas = new javax.swing.JMenu();
     }
 
     /**
@@ -32,23 +26,25 @@ public class MenuPrincipalUI extends javax.swing.JFrame {
         mnuIngresar = new javax.swing.JMenuItem();
         mnuSalir = new javax.swing.JMenuItem();
         mnuUsuarios = new javax.swing.JMenu();
+        mnuAdminUser = new javax.swing.JMenuItem();
         mnuPlatos = new javax.swing.JMenu();
         mnuPedidos = new javax.swing.JMenu();
         mnuMesas = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        mnuAdminMesas = new javax.swing.JMenuItem();
         mnuFacturacion = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Gestión de Comida Rápida");
 
         javax.swing.GroupLayout escritorioLayout = new javax.swing.GroupLayout(escritorio);
         escritorio.setLayout(escritorioLayout);
         escritorioLayout.setHorizontalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 654, Short.MAX_VALUE)
+            .addGap(0, 840, Short.MAX_VALUE)
         );
         escritorioLayout.setVerticalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 446, Short.MAX_VALUE)
+            .addGap(0, 518, Short.MAX_VALUE)
         );
 
         mnuLogin.setText("Login");
@@ -62,37 +58,51 @@ public class MenuPrincipalUI extends javax.swing.JFrame {
         mnuLogin.add(mnuIngresar);
 
         mnuSalir.setText("Salir");
+        mnuSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuSalirActionPerformed(evt);
+            }
+        });
         mnuLogin.add(mnuSalir);
 
         jMenuBar1.add(mnuLogin);
 
         mnuUsuarios.setText("Usuarios");
+        mnuUsuarios.setEnabled(false);
+
+        mnuAdminUser.setText("Administrar");
+        mnuAdminUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuAdminUserActionPerformed(evt);
+            }
+        });
+        mnuUsuarios.add(mnuAdminUser);
+
         jMenuBar1.add(mnuUsuarios);
 
         mnuPlatos.setText("Platos");
+        mnuPlatos.setEnabled(false);
         jMenuBar1.add(mnuPlatos);
 
         mnuPedidos.setText("Pedidos");
+        mnuPedidos.setEnabled(false);
         jMenuBar1.add(mnuPedidos);
 
         mnuMesas.setText("Mesas");
-        mnuMesas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnuMesasActionPerformed(evt);
-            }
-        });
+        mnuMesas.setEnabled(false);
 
-        jMenuItem1.setText("Mesas");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        mnuAdminMesas.setText("Administrar");
+        mnuAdminMesas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnuMesas(evt);
+                mnuAdminMesasActionPerformed(evt);
             }
         });
-        mnuMesas.add(jMenuItem1);
+        mnuMesas.add(mnuAdminMesas);
 
         jMenuBar1.add(mnuMesas);
 
         mnuFacturacion.setText("Facturación");
+        mnuFacturacion.setEnabled(false);
         jMenuBar1.add(mnuFacturacion);
 
         setJMenuBar(jMenuBar1);
@@ -113,37 +123,53 @@ public class MenuPrincipalUI extends javax.swing.JFrame {
 
     private void mnuIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuIngresarActionPerformed
         // TODO add your handling code here:
-        if(login == null || login.isClosed()){
-            login = new LoginUI();
+        if (login == null || login.isClosed()) {
+            login = new LoginUI(MenuPrincipalUI.this);
             escritorio.add(login);
             login.setVisible(true);
-        }else{
-            try{
+        } else {
+            try {
                 login.setSelected(true);
-            }catch(java.beans.PropertyVetoException e){
+            } catch (java.beans.PropertyVetoException e) {
                 e.printStackTrace();
             }
         }
     }//GEN-LAST:event_mnuIngresarActionPerformed
 
-    private void mnuMesasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuMesasActionPerformed
-        
-    }//GEN-LAST:event_mnuMesasActionPerformed
+    private void mnuSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuSalirActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_mnuSalirActionPerformed
 
-    private void mnuMesas(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuMesas
-                                     
-    if (mesas == null || mesas.isClosed()){
-        mesas = new Mesas();
-        escritorio.add(mesas);
-        mesas.setVisible(true);
-    } else {
-        try {
-            mesas.setSelected(true);
-        } catch (java.beans.PropertyVetoException e) {
-            e.printStackTrace();
+    private void mnuAdminUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuAdminUserActionPerformed
+        // TODO add your handling code here:
+        if (usuario == null || usuario.isClosed()) {
+            usuario = new UsuarioUI();
+            escritorio.add(usuario);
+            usuario.setVisible(true);
+        } else {
+            try {
+                usuario.setSelected(true);
+            } catch (java.beans.PropertyVetoException e) {
+                e.printStackTrace();
+            }
         }
-    }
-    }//GEN-LAST:event_mnuMesas
+    }//GEN-LAST:event_mnuAdminUserActionPerformed
+
+    private void mnuAdminMesasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuAdminMesasActionPerformed
+        // TODO add your handling code here:
+        if (mesas == null || mesas.isClosed()) {
+            mesas = new Mesas();
+            escritorio.add(mesas);
+            mesas.setVisible(true);
+        } else {
+            try {
+                mesas.setSelected(true);
+            } catch (java.beans.PropertyVetoException e) {
+                e.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_mnuAdminMesasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -181,10 +207,35 @@ public class MenuPrincipalUI extends javax.swing.JFrame {
         });
     }
 
+    public void habilitarMenuIngresar(boolean habilitar) {
+        mnuIngresar.setEnabled(habilitar);
+    }
+
+    public void habilitarMenuUsuario(boolean habilitar) {
+        mnuUsuarios.setEnabled(habilitar);
+    }
+
+    public void habilitarMenuPlatos(boolean habilitar) {
+        mnuPlatos.setEnabled(habilitar);
+    }
+
+    public void habilitarMenuPedidos(boolean habilitar) {
+        mnuPedidos.setEnabled(habilitar);
+    }
+
+    public void habilitarMenuMesas(boolean habilitar) {
+        mnuMesas.setEnabled(habilitar);
+    }
+
+    public void habilitarMenuFacturacion(boolean habilitar) {
+        mnuFacturacion.setEnabled(habilitar);
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane escritorio;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem mnuAdminMesas;
+    private javax.swing.JMenuItem mnuAdminUser;
     private javax.swing.JMenu mnuFacturacion;
     private javax.swing.JMenuItem mnuIngresar;
     private javax.swing.JMenu mnuLogin;
