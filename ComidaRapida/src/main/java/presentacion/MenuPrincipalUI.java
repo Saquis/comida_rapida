@@ -157,7 +157,7 @@ public class MenuPrincipalUI extends javax.swing.JFrame {
     private void mnuAdminUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuAdminUserActionPerformed
         // TODO add your handling code here:
         if (usuario == null || usuario.isClosed()) {
-            usuario = new UsuarioUI();
+            usuario = new UsuarioUI(escritorio);
             escritorio.add(usuario);
             usuario.setVisible(true);
         } else {
