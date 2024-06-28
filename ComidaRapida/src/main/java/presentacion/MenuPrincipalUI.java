@@ -8,6 +8,8 @@ public class MenuPrincipalUI extends javax.swing.JFrame {
     private LoginUI login;
     private Mesas mesas;
     private UsuarioUI usuario;
+    private ComidasUI comidas;
+    private BebidasUI bebidas;
 
     public MenuPrincipalUI() {
         initComponents();
@@ -32,6 +34,8 @@ public class MenuPrincipalUI extends javax.swing.JFrame {
         mnuUsuarios = new javax.swing.JMenu();
         mnuAdminUser = new javax.swing.JMenuItem();
         mnuPlatos = new javax.swing.JMenu();
+        mnuComida = new javax.swing.JMenuItem();
+        mnuBebidas = new javax.swing.JMenuItem();
         mnuPedidos = new javax.swing.JMenu();
         mnuMesas = new javax.swing.JMenu();
         mnuAdminMesas = new javax.swing.JMenuItem();
@@ -95,6 +99,23 @@ public class MenuPrincipalUI extends javax.swing.JFrame {
 
         mnuPlatos.setText("Platos");
         mnuPlatos.setEnabled(false);
+
+        mnuComida.setText("Comidas");
+        mnuComida.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuComidaActionPerformed(evt);
+            }
+        });
+        mnuPlatos.add(mnuComida);
+
+        mnuBebidas.setText("Bebidas");
+        mnuBebidas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuBebidasActionPerformed(evt);
+            }
+        });
+        mnuPlatos.add(mnuBebidas);
+
         jMenuBar1.add(mnuPlatos);
 
         mnuPedidos.setText("Pedidos");
@@ -134,26 +155,6 @@ public class MenuPrincipalUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void mnuIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuIngresarActionPerformed
-        // TODO add your handling code here:
-        if (login == null || login.isClosed()) {
-            login = new LoginUI(MenuPrincipalUI.this);
-            escritorio.add(login);
-            login.setVisible(true);
-        } else {
-            try {
-                login.setSelected(true);
-            } catch (java.beans.PropertyVetoException e) {
-                e.printStackTrace();
-            }
-        }
-    }//GEN-LAST:event_mnuIngresarActionPerformed
-
-    private void mnuSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuSalirActionPerformed
-        // TODO add your handling code here:
-        this.dispose();
-    }//GEN-LAST:event_mnuSalirActionPerformed
-
     private void mnuAdminUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuAdminUserActionPerformed
         // TODO add your handling code here:
         if (usuario == null || usuario.isClosed()) {
@@ -184,6 +185,11 @@ public class MenuPrincipalUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_mnuAdminMesasActionPerformed
 
+    private void mnuSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuSalirActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_mnuSalirActionPerformed
+
     private void mnuCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCerrarSesionActionPerformed
         // TODO add your handling code here:
         JInternalFrame[] allFrames = escritorio.getAllFrames();
@@ -197,9 +203,55 @@ public class MenuPrincipalUI extends javax.swing.JFrame {
         mnuPedidos.setEnabled(false);
         mnuMesas.setEnabled(false);
         mnuFacturacion.setEnabled(false);
-        
+
         JOptionPane.showMessageDialog(this, "Usuario se desconectó correctamente.");
     }//GEN-LAST:event_mnuCerrarSesionActionPerformed
+
+    private void mnuIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuIngresarActionPerformed
+        // TODO add your handling code here:
+        if (login == null || login.isClosed()) {
+            login = new LoginUI(MenuPrincipalUI.this);
+            escritorio.add(login);
+            login.setVisible(true);
+        } else {
+            try {
+                login.setSelected(true);
+            } catch (java.beans.PropertyVetoException e) {
+                e.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_mnuIngresarActionPerformed
+
+    private void mnuComidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuComidaActionPerformed
+        // TODO add your handling code here:
+        // Acción para mostrar el JInternalFrame de Comidas
+        if (comidas == null || comidas.isClosed()) {
+            comidas = new ComidasUI();
+            escritorio.add(comidas);
+        }
+        comidas.setVisible(true);
+
+        try {
+            comidas.setSelected(true);
+        } catch (java.beans.PropertyVetoException e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_mnuComidaActionPerformed
+
+    private void mnuBebidasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuBebidasActionPerformed
+        // TODO add your handling code here:
+        // Acción para mostrar el JInternalFrame de Bebidas
+        if (bebidas == null || bebidas.isClosed()) {
+            bebidas = new BebidasUI();
+            escritorio.add(bebidas);
+        }
+        bebidas.setVisible(true);
+        try {
+            bebidas.setSelected(true);
+        } catch (java.beans.PropertyVetoException e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_mnuBebidasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -270,7 +322,9 @@ public class MenuPrincipalUI extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem mnuAdminMesas;
     private javax.swing.JMenuItem mnuAdminUser;
+    private javax.swing.JMenuItem mnuBebidas;
     private javax.swing.JMenuItem mnuCerrarSesion;
+    private javax.swing.JMenuItem mnuComida;
     private javax.swing.JMenu mnuFacturacion;
     private javax.swing.JMenuItem mnuIngresar;
     private javax.swing.JMenu mnuLogin;

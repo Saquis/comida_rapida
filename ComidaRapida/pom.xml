@@ -28,14 +28,39 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.13.0</version>
-                <configuration>
-                    <source>22</source>
-                    <target>22</target>
-                </configuration>
-            </plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>3.8.1</version>
+            <configuration>
+                <source>22</source>
+                <target>22</target>
+                <compilerArgs>
+                    <arg>--enable-preview</arg>
+                </compilerArgs>
+            </configuration>
+        </plugin>
+        <!-- Plugin para la ejecución -->
+        <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <version>3.1.0</version>
+            <executions>
+                <execution>
+                    <goals>
+                        <goal>exec</goal>
+                    </goals>
+                </execution>
+            </executions>
+            <configuration>
+                <executable>java</executable>
+                <arguments>
+                    <argument>--enable-preview</argument>
+                    <argument>-classpath</argument>
+                    <classpath />
+                    <argument>presentacion.MenuPrincipalUI</argument>
+                </arguments>
+            </configuration>
+        </plugin>
         </plugins>
     </build>
     <name>ComidaRapida</name>
