@@ -41,6 +41,8 @@ public class Mesas extends javax.swing.JInternalFrame {
         modeloMesas.addRow(new Object[]{2, 2, "Ocupada"});
 
         tblMesas.setModel(modeloMesas);
+        
+        //ACTUALIZACION IMPORTANTE
     }
     
 

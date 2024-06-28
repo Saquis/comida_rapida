@@ -1,4 +1,5 @@
 datos\Rol.class
+<<<<<<< HEAD
 logica\FunComidas.class
 presentacion\MenuPrincipalUI$5.class
 utils\HelpTabla.class
@@ -42,11 +43,17 @@ presentacion\BebidasUI$2.class
 presentacion\Mesas$5.class
 presentacion\ComidasUI$4.class
 presentacion\BebidasUI$13.class
+=======
+presentacion\MenuPrincipalUI$5.class
+presentacion\Mesas$5.class
+utils\HelpTabla.class
+>>>>>>> 652c5b2f5918ccfdec31e5179cfc6be71bdede4b
 presentacion\MenuPrincipalUI$3.class
 presentacion\LoginUI$2.class
 utils\ValidarCadenas$2.class
 utils\ValidarCadenas$5.class
 presentacion\UsuarioUI$6.class
+<<<<<<< HEAD
 presentacion\BebidasUI$9.class
 presentacion\ComidasUI$11.class
 presentacion\ComidasUI$7.class
@@ -59,11 +66,25 @@ presentacion\BebidasUI$3.class
 presentacion\UsuarioUI$3.class
 presentacion\BebidasUI$6.class
 presentacion\UsuarioUI.class
+=======
+presentacion\UsuarioUI$1.class
+utils\Encriptar.class
+logica\Conexion.class
+presentacion\Mesas$3.class
+presentacion\UsuarioUI$5.class
+presentacion\MenuPrincipalUI$2.class
+presentacion\UsuarioUI$3.class
+utils\ValidarCadenas$3.class
+presentacion\UsuarioUI.class
+presentacion\UsuarioUI$7.class
+presentacion\LoginUI.class
+>>>>>>> 652c5b2f5918ccfdec31e5179cfc6be71bdede4b
 logica\FunUsuario.class
 presentacion\LoginUI$1.class
 presentacion\UsuarioUI$2.class
 presentacion\MenuPrincipalUI$4.class
 utils\ValidarCadenas.class
+<<<<<<< HEAD
 presentacion\RolUI$1.class
 presentacion\ComidasUI$8.class
 presentacion\Mesas$1.class
@@ -75,5 +96,18 @@ utils\ValidarCadenas$4.class
 presentacion\Mesas$4.class
 presentacion\ComidasUI$5.class
 presentacion\BebidasUI$7.class
+=======
+presentacion\Mesas$1.class
+utils\ValidarCadenas$6.class
+utils\ValidarCadenas$1.class
+logica\FunRol.class
+datos\Usuario.class
+presentacion\UsuarioUI$4.class
+utils\ValidarCadenas$4.class
+presentacion\Mesas$2.class
+presentacion\Mesas$4.class
+presentacion\Mesas.class
+presentacion\MenuPrincipalUI$6.class
+>>>>>>> 652c5b2f5918ccfdec31e5179cfc6be71bdede4b
 presentacion\MenuPrincipalUI.class
 presentacion\MenuPrincipalUI$1.class
