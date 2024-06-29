@@ -2,19 +2,31 @@ package presentacion;
 
 import datos.Rol;
 import datos.Usuario;
+import datos.UsuarioRol;
+import java.util.ArrayList;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import logica.FunUsuario;
+import logica.FunRol;
 import logica.FunUsuarioRol;
-import utils.Encriptar;
 import utils.HelpTabla;
-import utils.ValidarCadenas;
 
 public class RolUI extends javax.swing.JInternalFrame {
 
-    public RolUI() {
+    private Usuario usuario;
+    private FunRol funrol = new FunRol();
+    private DefaultComboBoxModel valores_combo = new DefaultComboBoxModel();
+    private UsuarioUI usuarioui;
+
+    public RolUI(UsuarioUI usuarioui) {
         initComponents();
-        
+        this.usuarioui = usuarioui;
+        this.usuario = this.usuarioui.getUsuario();
+        txtIdUsuario.setText(String.valueOf(this.usuario.getId_usuario()));
+        txtLogin.setText(this.usuario.getLogin());
+        mostrarDatos(this.usuario);
+        cargar_combo();
+        HelpTabla.ajustarAnchoColumnas(tableRol);
     }
 
     /**
@@ -47,6 +59,23 @@ public class RolUI extends javax.swing.JInternalFrame {
         setIconifiable(true);
         setMaximizable(true);
         setTitle("Roles de Usuario");
+        addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
+            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameClosing(evt);
+            }
+            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+            }
+        });
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
@@ -59,6 +88,7 @@ public class RolUI extends javax.swing.JInternalFrame {
         });
 
         btnAsignar.setText("Asignar");
+        btnAsignar.setEnabled(false);
         btnAsignar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAsignarActionPerformed(evt);
@@ -102,6 +132,12 @@ public class RolUI extends javax.swing.JInternalFrame {
         jScrollPane2.setViewportView(tableRol);
 
         jLabel1.setText("Rol:");
+
+        cmbRol.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmbRolItemStateChanged(evt);
+            }
+        });
 
         jLabel2.setText("Roles Asignados");
 
@@ -187,41 +223,128 @@ public class RolUI extends javax.swing.JInternalFrame {
 
     private void btnQuitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuitarActionPerformed
         // TODO add your handling code here:
-        
+        if (cmbRol.getSelectedIndex() == 0) {
+            JOptionPane.showMessageDialog(this, "Debes seleccionar el rol.");
+            cmbRol.requestFocus();
+            return;
+        }
+
+        FunUsuarioRol func = new FunUsuarioRol();
+        UsuarioRol dts = new UsuarioRol();
+
+        Rol rol = (Rol) cmbRol.getSelectedItem();
+        dts.setUsuario(usuario);
+        dts.setRol(rol);
+
+        if (func.eliminar(dts)) {
+            JOptionPane.showMessageDialog(this, "Rol eliminado correctamente.");
+            mostrarDatos(usuario);
+            HelpTabla.ajustarAnchoColumnas(tableRol);
+            cmbRol.setSelectedIndex(0);
+        }
+
     }//GEN-LAST:event_btnQuitarActionPerformed
 
     private void btnAsignarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAsignarActionPerformed
         // TODO add your handling code here:
-        
+        if (cmbRol.getSelectedIndex() == 0) {
+            JOptionPane.showMessageDialog(this, "Debes seleccionar el rol.");
+            cmbRol.requestFocus();
+            return;
+        }
+
+        FunUsuarioRol func = new FunUsuarioRol();
+        UsuarioRol dts = new UsuarioRol();
+
+        Rol rol = (Rol) cmbRol.getSelectedItem();
+        dts.setUsuario(usuario);
+        dts.setRol(rol);
+
+        if (func.insertar(dts)) {
+            JOptionPane.showMessageDialog(this, "Rol registrado correctamente.");
+            mostrarDatos(usuario);
+            HelpTabla.ajustarAnchoColumnas(tableRol);
+            cmbRol.setSelectedIndex(0);
+        }
+
     }//GEN-LAST:event_btnAsignarActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         // TODO add your handling code here:
+        usuarioui.mostrarPantalla();
         this.dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void tableRolMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableRolMouseClicked
         // TODO add your handling code here:
         int fila = tableRol.getSelectedRow();
-        
-        
+        for (int i = 0; i < cmbRol.getItemCount(); i++) {
+            Rol rol = cmbRol.getItemAt(i);
+            if (rol.getId_rol() == Integer.parseInt(tableRol.getValueAt(fila, 0).toString())) {
+                cmbRol.setSelectedIndex(i);
+                break;
+            }
+        }
+        btnAsignar.setEnabled(false);
+        btnQuitar.setEnabled(true);
     }//GEN-LAST:event_tableRolMouseClicked
-    
+
+    private void cmbRolItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbRolItemStateChanged
+        // TODO add your handling code here:
+        Rol rol;
+        if (cmbRol.getSelectedIndex() == 0) {
+            btnAsignar.setEnabled(false);
+            btnQuitar.setEnabled(false);
+        } else {
+            rol = (Rol) cmbRol.getSelectedItem();
+
+            if (tableRol.getRowCount() == 0) {
+                btnAsignar.setEnabled(true);
+                btnQuitar.setEnabled(false);
+            } else {
+                for (int i = 0; i < tableRol.getRowCount(); i++) {
+                    if (rol.getId_rol() == Integer.parseInt(tableRol.getValueAt(i, 0).toString())) {
+                        btnAsignar.setEnabled(false);
+                        btnQuitar.setEnabled(true);
+                        break;
+                    } else {
+                        btnAsignar.setEnabled(true);
+                        btnQuitar.setEnabled(false);
+                    }
+                }
+            }
+        }
+
+    }//GEN-LAST:event_cmbRolItemStateChanged
+
+    private void formInternalFrameClosing(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameClosing
+        // TODO add your handling code here:
+        usuarioui.mostrarPantalla();
+    }//GEN-LAST:event_formInternalFrameClosing
+
     //Método para cargar datos en la tabla
-    private void mostrarDatos(String cadena) {
+    private void mostrarDatos(Usuario usuario) {
         try {
             DefaultTableModel modelo;
             FunUsuarioRol usuario_rol = new FunUsuarioRol();
-            Usuario usuario = new Usuario();
-            usuario.setId_usuario(Integer.parseInt(txtIdUsuario.getText()));
             modelo = usuario_rol.mostrar(usuario);
             tableRol.setModel(modelo);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e);
         }
     }
-    
-   
+
+    private void cargar_combo() {
+        ArrayList<Rol> lista = funrol.mostrar_roles();
+
+        cmbRol.setModel(valores_combo);
+        valores_combo.addElement(new Rol(0, "Selecciona un rol"));
+
+        for (Rol r : lista) {
+            valores_combo.addElement(r);
+        }
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAsignar;
     private javax.swing.JButton btnQuitar;

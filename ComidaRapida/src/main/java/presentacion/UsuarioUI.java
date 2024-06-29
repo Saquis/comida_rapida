@@ -16,6 +16,7 @@ public class UsuarioUI extends javax.swing.JInternalFrame {
     private String estado = "V";   //V-Vigente; C-Cancelado
     private JDesktopPane escritorio;
     private RolUI rol;
+    private Usuario usuario;
 
     public UsuarioUI(JDesktopPane escritorio) {
         initComponents();
@@ -431,9 +432,13 @@ public class UsuarioUI extends javax.swing.JInternalFrame {
     private void btnRolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRolActionPerformed
         // TODO add your handling code here:
         if (rol == null || rol.isClosed()) {
-            rol = new RolUI();
+            usuario = new Usuario();
+            this.usuario.setId_usuario(Integer.parseInt(txtIdUsuario.getText()));
+            this.usuario.setLogin(txtLogin.getText());
+            rol = new RolUI(this);
             escritorio.add(rol);
             rol.setVisible(true);
+            this.setVisible(false);
         } else {
             try {
                 rol.setSelected(true);
@@ -543,6 +548,14 @@ public class UsuarioUI extends javax.swing.JInternalFrame {
             return false;
         }
         return true;
+    }
+
+    public void mostrarPantalla(){
+        this.setVisible(true);
+    }
+    
+    public Usuario getUsuario() {
+        return usuario;
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
