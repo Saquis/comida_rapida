@@ -4,19 +4,16 @@
  */
 package presentacion;
 
-
 import datos.MesasDatos;
 import logica.FunMesas;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
-
-
 /**
  *
  * @author German
  */
-public class Mesas extends javax.swing.JInternalFrame {
+public class MesasUI extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form Mesas
@@ -24,7 +21,7 @@ public class Mesas extends javax.swing.JInternalFrame {
     private DefaultTableModel modeloMesas;
     private FunMesas funMesas;
 
-    public Mesas() {
+    public MesasUI() {
 
         initComponents();
         funMesas = new FunMesas();
@@ -35,12 +32,17 @@ public class Mesas extends javax.swing.JInternalFrame {
         setIconifiable(true);
         setResizable(true);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+        // Deshabilitar los botones inicialmente
+        btnAsignar.setEnabled(false);
+        btnEditar.setEnabled(false);
+        btnEliminar.setEnabled(false);
+        btnLiberar.setEnabled(false);
     }
 
     private void initTable() {
         modeloMesas = funMesas.mostrar();
         tblMesas.setModel(modeloMesas);
-        
 
         //ACTUALIZACION IMPORTANTE
     }
@@ -62,6 +64,8 @@ public class Mesas extends javax.swing.JInternalFrame {
         btnEliminar = new javax.swing.JButton();
         btnLiberar = new javax.swing.JButton();
 
+        setTitle("MESAS");
+
         tblMesas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
@@ -75,7 +79,6 @@ public class Mesas extends javax.swing.JInternalFrame {
         ));
         jScrollPane1.setViewportView(tblMesas);
 
-        btnAgregar.setBackground(new java.awt.Color(51, 51, 255));
         btnAgregar.setForeground(new java.awt.Color(255, 255, 255));
         btnAgregar.setIcon(new javax.swing.ImageIcon("C:\\Users\\princ\\OneDrive\\Documentos\\GitHub\\comida_rapida\\ComidaRapida\\src\\main\\java\\files\\imgAgregar..png")); // NOI18N
         btnAgregar.addActionListener(new java.awt.event.ActionListener() {
@@ -84,36 +87,40 @@ public class Mesas extends javax.swing.JInternalFrame {
             }
         });
 
+        btnAsignar.setBackground(new java.awt.Color(0, 0, 0));
         btnAsignar.setForeground(new java.awt.Color(255, 255, 255));
-        btnAsignar.setIcon(new javax.swing.ImageIcon("C:\\Users\\princ\\OneDrive\\Documentos\\GitHub\\comida_rapida\\ComidaRapida\\src\\main\\java\\files\\imgAsignar...png")); // NOI18N
-        btnAsignar.setText("Asignar");
+        btnAsignar.setIcon(new javax.swing.ImageIcon("C:\\Users\\princ\\OneDrive\\Documentos\\GitHub\\comida_rapida\\ComidaRapida\\src\\main\\java\\files\\imgAsignar.png")); // NOI18N
+        btnAsignar.setText("ASIGNAR");
         btnAsignar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAsignarActionPerformed(evt);
             }
         });
 
+        btnEditar.setBackground(new java.awt.Color(0, 0, 0));
         btnEditar.setForeground(new java.awt.Color(255, 255, 255));
         btnEditar.setIcon(new javax.swing.ImageIcon("C:\\Users\\princ\\OneDrive\\Documentos\\GitHub\\comida_rapida\\ComidaRapida\\src\\main\\java\\files\\imgEditar.png")); // NOI18N
-        btnEditar.setText("Editar");
+        btnEditar.setText("EDITAR");
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEditarActionPerformed(evt);
             }
         });
 
+        btnEliminar.setBackground(new java.awt.Color(0, 0, 0));
         btnEliminar.setForeground(new java.awt.Color(255, 255, 255));
-        btnEliminar.setIcon(new javax.swing.ImageIcon("C:\\Users\\princ\\OneDrive\\Documentos\\GitHub\\comida_rapida\\ComidaRapida\\src\\main\\java\\files\\ingEliminar.png")); // NOI18N
-        btnEliminar.setText("Eliminar");
+        btnEliminar.setIcon(new javax.swing.ImageIcon("C:\\Users\\princ\\OneDrive\\Documentos\\GitHub\\comida_rapida\\ComidaRapida\\src\\main\\java\\files\\imgEliminar.png")); // NOI18N
+        btnEliminar.setText("ELIMINAR");
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEliminarActionPerformed(evt);
             }
         });
 
+        btnLiberar.setBackground(new java.awt.Color(0, 0, 0));
         btnLiberar.setForeground(new java.awt.Color(255, 255, 255));
         btnLiberar.setIcon(new javax.swing.ImageIcon("C:\\Users\\princ\\OneDrive\\Documentos\\GitHub\\comida_rapida\\ComidaRapida\\src\\main\\java\\files\\imgLiberar.png")); // NOI18N
-        btnLiberar.setText("Liberar");
+        btnLiberar.setText("LIBERAR");
         btnLiberar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLiberarActionPerformed(evt);
@@ -133,35 +140,32 @@ public class Mesas extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(54, 54, 54)
                         .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(34, 34, 34)
-                        .addComponent(btnAsignar, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(38, 38, 38)
+                        .addComponent(btnAsignar)
+                        .addGap(53, 53, 53)
+                        .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(37, 37, 37)
-                        .addComponent(btnLiberar, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(97, 97, 97)
-                        .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(173, 173, 173))))
+                        .addComponent(btnLiberar)
+                        .addGap(35, 35, 35)
+                        .addComponent(btnEliminar)
+                        .addGap(115, 115, 115))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(4, 4, 4)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(4, 4, 4)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnAsignar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(23, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(24, 24, 24)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnLiberar, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(btnAsignar)
+                            .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnLiberar, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
 
         pack();
@@ -169,16 +173,22 @@ public class Mesas extends javax.swing.JInternalFrame {
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
-        
-    String capacidad = JOptionPane.showInputDialog(this, "Ingrese la capacidad de la mesa:");
+
+        String capacidad = JOptionPane.showInputDialog(this, "Ingrese la capacidad de la mesa:");
     if (capacidad != null && !capacidad.isEmpty()) {
         MesasDatos nuevaMesa = new MesasDatos(0, Integer.parseInt(capacidad), "Disponible");
         funMesas.insertarMesa(nuevaMesa);
         modeloMesas = funMesas.mostrar();
         tblMesas.setModel(modeloMesas);
+
+        // Habilitar los otros botones
+        btnAsignar.setEnabled(true);
+        btnEditar.setEnabled(true);
+        btnEliminar.setEnabled(true);
+        btnLiberar.setEnabled(true);
     }
-   
-     
+
+
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnAsignarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAsignarActionPerformed
@@ -186,9 +196,17 @@ public class Mesas extends javax.swing.JInternalFrame {
         int selectedRow = tblMesas.getSelectedRow();
     if (selectedRow != -1) {
         int id = Integer.parseInt(modeloMesas.getValueAt(selectedRow, 0).toString());
-        funMesas.actualizarEstadoMesa(id, "Ocupada");
+        funMesas.eliminarMesa(id);
         modeloMesas = funMesas.mostrar();
         tblMesas.setModel(modeloMesas);
+
+        // Deshabilitar los otros botones si no hay mesas
+        if (modeloMesas.getRowCount() == 0) {
+            btnAsignar.setEnabled(false);
+            btnEditar.setEnabled(false);
+            btnEliminar.setEnabled(false);
+            btnLiberar.setEnabled(false);
+        }
     } else {
         JOptionPane.showMessageDialog(this, "Seleccione una mesa para asignar.");
     }
@@ -197,43 +215,43 @@ public class Mesas extends javax.swing.JInternalFrame {
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         // TODO add your handling code here:
         int selectedRow = tblMesas.getSelectedRow();
-    if (selectedRow != -1) {
-        String capacidad = JOptionPane.showInputDialog(this, "Ingrese la nueva capacidad de la mesa:");
-        if (capacidad != null && !capacidad.isEmpty()) {
-            int id = Integer.parseInt(modeloMesas.getValueAt(selectedRow, 0).toString());
-            funMesas.actualizarCapacidadMesa(id, Integer.parseInt(capacidad));
-            modeloMesas = funMesas.mostrar();
-            tblMesas.setModel(modeloMesas);
+        if (selectedRow != -1) {
+            String capacidad = JOptionPane.showInputDialog(this, "Ingrese la nueva capacidad de la mesa:");
+            if (capacidad != null && !capacidad.isEmpty()) {
+                int id = Integer.parseInt(modeloMesas.getValueAt(selectedRow, 0).toString());
+                funMesas.actualizarCapacidadMesa(id, Integer.parseInt(capacidad));
+                modeloMesas = funMesas.mostrar();
+                tblMesas.setModel(modeloMesas);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Seleccione una mesa para editar.");
         }
-    } else {
-        JOptionPane.showMessageDialog(this, "Seleccione una mesa para editar.");
-    }
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
         int selectedRow = tblMesas.getSelectedRow();
-    if (selectedRow != -1) {
-        int id = Integer.parseInt(modeloMesas.getValueAt(selectedRow, 0).toString());
-        funMesas.eliminarMesa(id);
-        modeloMesas = funMesas.mostrar();
-        tblMesas.setModel(modeloMesas);
-    } else {
-        JOptionPane.showMessageDialog(this, "Seleccione una mesa para eliminar.");
-    }
+        if (selectedRow != -1) {
+            int id = Integer.parseInt(modeloMesas.getValueAt(selectedRow, 0).toString());
+            funMesas.eliminarMesa(id);
+            modeloMesas = funMesas.mostrar();
+            tblMesas.setModel(modeloMesas);
+        } else {
+            JOptionPane.showMessageDialog(this, "Seleccione una mesa para eliminar.");
+        }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnLiberarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLiberarActionPerformed
         // TODO add your handling code here:
         int selectedRow = tblMesas.getSelectedRow();
-    if (selectedRow != -1) {
-        int id = Integer.parseInt(modeloMesas.getValueAt(selectedRow, 0).toString());
-        funMesas.actualizarEstadoMesa(id, "Disponible");
-        modeloMesas = funMesas.mostrar();
-        tblMesas.setModel(modeloMesas);
-    } else {
-        JOptionPane.showMessageDialog(this, "Seleccione una mesa para liberar.");
-    }
+        if (selectedRow != -1) {
+            int id = Integer.parseInt(modeloMesas.getValueAt(selectedRow, 0).toString());
+            funMesas.actualizarEstadoMesa(id, "Disponible");
+            modeloMesas = funMesas.mostrar();
+            tblMesas.setModel(modeloMesas);
+        } else {
+            JOptionPane.showMessageDialog(this, "Seleccione una mesa para liberar.");
+        }
     }//GEN-LAST:event_btnLiberarActionPerformed
 
 

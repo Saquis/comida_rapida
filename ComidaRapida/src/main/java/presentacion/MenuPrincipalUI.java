@@ -6,7 +6,7 @@ import javax.swing.JOptionPane;
 public class MenuPrincipalUI extends javax.swing.JFrame {
 
     private LoginUI login;
-    private Mesas mesas;
+    private MesasUI mesas;
     private UsuarioUI usuario;
     private ComidasUI comidas;
     private BebidasUI bebidas;
@@ -193,7 +193,7 @@ public class MenuPrincipalUI extends javax.swing.JFrame {
     private void mnuAdminMesasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuAdminMesasActionPerformed
         // TODO add your handling code here:
         if (mesas == null || mesas.isClosed()) {
-            mesas = new Mesas();
+            mesas = new MesasUI();
             escritorio.add(mesas);
             mesas.setVisible(true);
         } else {

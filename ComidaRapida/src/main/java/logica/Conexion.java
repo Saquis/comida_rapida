@@ -11,7 +11,7 @@ public class Conexion {
         var baseDatos = "gestion_pedidos";
         var url = "jdbc:mysql://localhost:3306/" + baseDatos;
         var usuario = "root";
-        var password = "";
+        var password = "root";
         // Cargamos la clase del driver en memoria
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
