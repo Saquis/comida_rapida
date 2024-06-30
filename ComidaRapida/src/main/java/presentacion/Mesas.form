@@ -32,11 +32,11 @@
                       <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
                       <Component id="btnAsignar" min="-2" pref="85" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
-                      <Component id="btnEditar" min="-2" pref="50" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
-                      <Component id="btnLiberar" min="-2" pref="46" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="97" max="-2" attributes="0"/>
-                      <Component id="btnEliminar" min="-2" pref="63" max="-2" attributes="0"/>
+                      <Component id="btnEditar" min="-2" pref="72" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="btnLiberar" min="-2" pref="65" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="72" max="-2" attributes="0"/>
+                      <Component id="btnEliminar" min="-2" pref="88" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="173" max="-2" attributes="0"/>
                   </Group>
               </Group>
