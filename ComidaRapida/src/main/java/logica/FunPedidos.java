@@ -48,55 +48,58 @@ public class FunPedidos {
     }
 
     public DefaultTableModel mostrar(String buscar) {
-        //creo un objeto de tipo DefaultTableModel
         DefaultTableModel modelo;
-        String[] titulos = {"ID PEDIDO", "ID USUARIO", "NOMBRE COMPLETO", "NOMBRE PLATO", "CANTIDAD PLATOS", "ID MESA", "FECHA DEL PEDIDO", "ESTADO"};
-        String[] registro = new String[8];
-        totalRegistro = 0;
-        modelo = new DefaultTableModel(null, titulos);
-        sql = "SELECT p.idpedido AS \"idpedido\",\n"
-                + "    u.idusuario AS \"idusuario\",\n"
-                + "    CONCAT(u.nombres, ' ', u.apellidos) AS \"nombreCompleto\",\n"
-                + "    pl.nombre AS \"nombreplato\",\n"
-                + "    dp.cantidad AS \"cantidad\",\n"
-                + "    pm.idmesa AS \"idmesa\",\n"
-                + "    p.fecha_pedido AS \"fecha_pedido\",\n"
-                + "    p.estado AS \"estado\"\n"
-                + "FROM \n"
-                + "    pedido p\n"
-                + "JOIN \n"
-                + "    usuario u ON p.idusuario = u.idusuario\n"
-                + "JOIN \n"
-                + "    detalle_pedido dp ON p.idpedido = dp.idpedido\n"
-                + "JOIN \n"
-                + "    plato pl ON dp.idplato = pl.idplato\n"
-                + "JOIN \n"
-                + "    pedido_mesa pm ON p.idpedido = pm.idpedido;";
-        try {
-            Statement st = cn.createStatement();
-            ResultSet resultSet = st.executeQuery(sql);
-            while (resultSet.next()) {
-                registro[0] = resultSet.getString("idpedido");
-                registro[1] = resultSet.getString("idusuario");
-                registro[2] = resultSet.getString("nombreCompleto");
-                registro[3] = resultSet.getString("nombreplato");
-                registro[4] = resultSet.getString("cantidad");
-                registro[5] = resultSet.getString("idmesa");
-                Date fechaPedido = resultSet.getDate("fecha_pedido");
-                if (fechaPedido != null) {
-                    registro[6] = fechaPedido.toString(); // Convierte la fecha a string
-                } else {
-                    registro[6] = "N/A"; // Maneja el caso de fechas nulas
-                }
-                registro[7] = resultSet.getString("estado");
-                modelo.addRow(registro);
+    String[] titulos = {"ID PEDIDO", "ID USUARIO", "NOMBRE COMPLETO", "NOMBRE PLATO", "CANTIDAD PLATOS", "ID MESA", "FECHA DEL PEDIDO", "ESTADO"};
+    String[] registro = new String[8];
+    totalRegistro = 0;
+    modelo = new DefaultTableModel(null, titulos);
+    sql = "SELECT p.idpedido AS \"idpedido\",\n"
+            + "    u.idusuario AS \"idusuario\",\n"
+            + "    CONCAT(u.nombres, ' ', u.apellidos) AS \"nombreCompleto\",\n"
+            + "    pl.nombre AS \"nombreplato\",\n"
+            + "    dp.cantidad AS \"cantidad\",\n"
+            + "    pm.idmesa AS \"idmesa\",\n"
+            + "    p.fecha_pedido AS \"fecha_pedido\",\n"
+            + "    p.estado AS \"estado\"\n"
+            + "FROM \n"
+            + "    pedido p\n"
+            + "JOIN \n"
+            + "    usuario u ON p.idusuario = u.idusuario\n"
+            + "JOIN \n"
+            + "    detalle_pedido dp ON p.idpedido = dp.idpedido\n"
+            + "JOIN \n"
+            + "    plato pl ON dp.idplato = pl.idplato\n"
+            + "JOIN \n"
+            + "    pedido_mesa pm ON p.idpedido = pm.idpedido;";
+    try {
+        Statement st = cn.createStatement();
+        ResultSet resultSet = st.executeQuery(sql);
+        while (resultSet.next()) {
+            registro[0] = resultSet.getString("idpedido");
+            registro[1] = resultSet.getString("idusuario");
+            registro[2] = resultSet.getString("nombreCompleto");
+            registro[3] = resultSet.getString("nombreplato");
+            registro[4] = resultSet.getString("cantidad");
+            registro[5] = resultSet.getString("idmesa");
+            Date fechaPedido = resultSet.getDate("fecha_pedido");
+            if (fechaPedido != null) {
+                registro[6] = fechaPedido.toString(); // Convierte la fecha a string
+            } else {
+                registro[6] = "N/A"; // Maneja el caso de fechas nulas
             }
-            return modelo;
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error al mostrar la tabla " + e);
-            return null;
+            registro[7] = resultSet.getString("estado");
+            modelo.addRow(registro);
+
+            // Agregar impresión para depuración
+            System.out.println("Pedido: " + resultSet.getString("idpedido") + ", Usuario: " + resultSet.getString("idusuario") + ", Plato: " + resultSet.getString("nombreplato"));
         }
+        return modelo;
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, "Error al mostrar la tabla " + e);
+        e.printStackTrace(); // Añadir traza de la excepción para depuración
+        return null;
     }
+}
 
     public boolean insertarPedido(String cedulaCliente, String nombrePlato, int cantidad, int idMesa) {
         int idUsuario = obtenerIdUsuarioPorCedula(cedulaCliente);

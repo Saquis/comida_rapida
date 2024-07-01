@@ -11,6 +11,7 @@ public class MenuPrincipalUI extends javax.swing.JFrame {
     private ComidasUI comidas;
     private BebidasUI bebidas;
     private PedidosUI pedidos;
+    private FacturacionUI factura;
 
     public MenuPrincipalUI() {
         initComponents();
@@ -42,6 +43,7 @@ public class MenuPrincipalUI extends javax.swing.JFrame {
         mnuMesas = new javax.swing.JMenu();
         mnuAdminMesas = new javax.swing.JMenuItem();
         mnuFacturacion = new javax.swing.JMenu();
+        jCheckBoxMenuItem1 = new javax.swing.JCheckBoxMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Gestión de Comida Rápida");
@@ -153,6 +155,16 @@ public class MenuPrincipalUI extends javax.swing.JFrame {
 
         mnuFacturacion.setText("Facturación");
         mnuFacturacion.setEnabled(false);
+
+        jCheckBoxMenuItem1.setSelected(true);
+        jCheckBoxMenuItem1.setText("Recibo");
+        jCheckBoxMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBoxMenuItem1ActionPerformed(evt);
+            }
+        });
+        mnuFacturacion.add(jCheckBoxMenuItem1);
+
         jMenuBar1.add(mnuFacturacion);
 
         setJMenuBar(jMenuBar1);
@@ -289,6 +301,22 @@ public class MenuPrincipalUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
+    private void jCheckBoxMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        if (factura == null || factura.isClosed()) {
+            factura = new FacturacionUI();
+            escritorio.add(factura);
+            factura.setVisible(true);
+        } else {
+            try {
+                factura.setSelected(true);
+            } catch (java.beans.PropertyVetoException e) {
+                e.printStackTrace();
+            }
+        }
+        
+    }//GEN-LAST:event_jCheckBoxMenuItem1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -355,6 +383,7 @@ public class MenuPrincipalUI extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane escritorio;
+    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem mnuAdminMesas;

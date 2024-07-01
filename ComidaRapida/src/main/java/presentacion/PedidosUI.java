@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import logica.Conexion;
@@ -36,7 +37,13 @@ public class PedidosUI extends javax.swing.JInternalFrame {
         cargarCombobox(cboPlatos);
         cargarCombobox2(cboIdMesa);
         cargarCombobox3(cboRoles);
+        setClosable(true);
+        setMaximizable(true);
+        setIconifiable(true);
+        setResizable(true);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -218,10 +225,12 @@ public class PedidosUI extends javax.swing.JInternalFrame {
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
+        // Verificar si los campos no están vacíos
         if (txtCIUsuario.getText().isEmpty() || txtCantidad.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Debe llenar todos los campos.");
             return;
         }
+
         // Obtener los valores de los campos
         String cedulaCliente = txtCIUsuario.getText();
         String nombrePlato = cboPlatos.getSelectedItem().toString();
@@ -232,7 +241,7 @@ public class PedidosUI extends javax.swing.JInternalFrame {
         FunPedidos fp = new FunPedidos();
         if (fp.insertarPedido(cedulaCliente, nombrePlato, cantidad, idMesa)) {
             JOptionPane.showMessageDialog(null, "Pedido agregado correctamente.");
-            mostrar("");
+            mostrar(""); // Llama a mostrar() para actualizar la tabla
         } else {
             JOptionPane.showMessageDialog(null, "Error al agregar el pedido.");
         }
@@ -320,13 +329,14 @@ public class PedidosUI extends javax.swing.JInternalFrame {
 
     void mostrar(String buscar) {
         try {
-            DefaultTableModel modelo = new DefaultTableModel();
+            DefaultTableModel modelo;
             FunPedidos fp = new FunPedidos();
             modelo = fp.mostrar(buscar);
             tblPedidos.setModel(modelo);
-            lblregistros.setText("TOTAL DE REGISTROS: " + Integer.toHexString(fp.totalRegistro + 1));
+            lblregistros.setText("TOTAL DE REGISTROS: " + modelo.getRowCount());
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error al mostrar datos" + e);
+            JOptionPane.showMessageDialog(null, "Error al mostrar datos: " + e);
+            e.printStackTrace();
         }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
