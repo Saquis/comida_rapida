@@ -4,19 +4,20 @@
  */
 package presentacion;
 
+import datos.Comidas;
 import datos.MesasDatos;
-import datos.PedidosDatos;
 import datos.Rol;
+import datos.Usuario;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import logica.Conexion;
 import logica.FunPedidos;
-import presentacion.PedidosUI;
 
 /**
  *
@@ -26,6 +27,9 @@ public class PedidosUI extends javax.swing.JInternalFrame {
 
     private Conexion mysql = new Conexion();
     private Connection cn = mysql.getConnection();
+    private ArrayList<String> pedidos = new ArrayList<>();
+    private String nombrePlato;
+    private int idMesa;
 
     /**
      * Creates new form PedidosUI
@@ -35,7 +39,8 @@ public class PedidosUI extends javax.swing.JInternalFrame {
         mostrar("");
         cargarCombobox(cboPlatos);
         cargarCombobox2(cboIdMesa);
-        cargarCombobox3(cboRoles);
+        cargarCombobox3(cboRol);
+        cargarCombobox4(cboUsuario);
     }
 
     /**
@@ -47,8 +52,6 @@ public class PedidosUI extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        txtCIUsuario = new javax.swing.JTextField();
         btnActualizar = new javax.swing.JButton();
         btnAgregar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
@@ -60,13 +63,17 @@ public class PedidosUI extends javax.swing.JInternalFrame {
         txtCantidad = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblPedidos = new javax.swing.JTable();
-        cboIdMesa = new javax.swing.JComboBox<>();
         cboPlatos = new javax.swing.JComboBox<>();
-        cboRoles = new javax.swing.JComboBox<>();
+        cboRol = new javax.swing.JComboBox<>();
+        cboIdMesa = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
+        cboUsuario = new javax.swing.JComboBox<>();
 
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
         setTitle("PEDIDOS");
-
-        jLabel1.setText("CI DEL CLIENTE:");
 
         btnActualizar.setText("ACTUALIZAR");
         btnActualizar.addActionListener(new java.awt.event.ActionListener() {
@@ -117,81 +124,101 @@ public class PedidosUI extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(tblPedidos);
 
-        cboIdMesa.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        cboPlatos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        cboRoles.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jLabel1.setText("ID USUARIO:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel6))
-                        .addGap(40, 40, 40)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtCIUsuario)
-                            .addComponent(txtCantidad)
-                            .addComponent(cboIdMesa, 0, 97, Short.MAX_VALUE)
-                            .addComponent(cboPlatos, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cboRoles, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(92, 92, 92)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(121, 121, 121))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel3)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(jLabel6)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(cboIdMesa, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGap(127, 127, 127)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel4)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel5)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(cboRol, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel1)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(cboUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(209, 209, 209)))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 516, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(16, 16, 16)
-                        .addComponent(btnActualizar)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnAgregar)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnEliminar)
-                        .addGap(84, 84, 84)
-                        .addComponent(lblregistros, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnActualizar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnAgregar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnEliminar))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(62, 62, 62)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cboPlatos, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(339, 339, 339)
+                                        .addComponent(lblregistros, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(17, 17, 17)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
-                            .addComponent(txtCIUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(cboIdMesa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5)
-                            .addComponent(cboPlatos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(29, 29, 29)
+                        .addComponent(lblregistros))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addGap(6, 6, 6)
+                                    .addComponent(jLabel4)
+                                    .addGap(42, 42, 42))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(jLabel6)
+                                        .addComponent(cboIdMesa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGap(18, 18, 18)
+                                    .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(41, 41, 41)))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel3)
+                                .addComponent(cboPlatos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel6)
-                            .addComponent(cboRoles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(26, 26, 26)
+                            .addComponent(jLabel5)
+                            .addComponent(cboRol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(cboUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 151, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnEliminar)
-                    .addComponent(btnAgregar)
                     .addComponent(btnActualizar)
-                    .addComponent(lblregistros))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnAgregar)
+                    .addComponent(btnEliminar))
+                .addContainerGap())
         );
 
         pack();
@@ -199,109 +226,119 @@ public class PedidosUI extends javax.swing.JInternalFrame {
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
-        if (!txtCIUsuario.getText().isEmpty()) {
-            int confirmacion = JOptionPane.showConfirmDialog(rootPane, "¿Está seguro de eliminar el pedido?", "Confirmar", JOptionPane.YES_NO_OPTION);
-            if (confirmacion == JOptionPane.YES_OPTION) {
-                FunPedidos fp = new FunPedidos();
-                int idPedido = Integer.parseInt(txtCIUsuario.getText());
-                if (fp.eliminarPedido(idPedido)) {
-                    JOptionPane.showMessageDialog(null, "Pedido eliminado correctamente.");
-                    mostrar("");
-                } else {
-                    JOptionPane.showMessageDialog(null, "Error al eliminar el pedido.");
-                }
+        int filaSeleccionada = tblPedidos.getSelectedRow();
+        if (filaSeleccionada >= 0) {
+            int idPedido = Integer.parseInt(tblPedidos.getValueAt(filaSeleccionada, 0).toString());
+
+            FunPedidos fp = new FunPedidos();
+            if (fp.eliminarPedido(idPedido)) {
+                JOptionPane.showMessageDialog(null, "Pedido eliminado correctamente");
+                mostrar("");
+            } else {
+                JOptionPane.showMessageDialog(null, "Error al eliminar pedido");
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Seleccione un pedido para eliminar.");
+            JOptionPane.showMessageDialog(null, "Seleccione un pedido para eliminar");
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
-        if (txtCIUsuario.getText().isEmpty() || txtCantidad.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Debe llenar todos los campos.");
-            return;
-        }
-        // Obtener los valores de los campos
-        String cedulaCliente = txtCIUsuario.getText();
         String nombrePlato = cboPlatos.getSelectedItem().toString();
         int cantidad = Integer.parseInt(txtCantidad.getText());
         int idMesa = Integer.parseInt(cboIdMesa.getSelectedItem().toString());
-
-        // Llamar al método de lógica para agregar el pedido
+        int idUsuario = Integer.parseInt(cboUsuario.getSelectedItem().toString());
+        
         FunPedidos fp = new FunPedidos();
-        if (fp.insertarPedido(cedulaCliente, nombrePlato, cantidad, idMesa)) {
-            JOptionPane.showMessageDialog(null, "Pedido agregado correctamente.");
-            mostrar("");
-        } else {
-            JOptionPane.showMessageDialog(null, "Error al agregar el pedido.");
+        String estadoMesa = fp.getEstadoMesa(idMesa);
+
+        if ("V".equals(estadoMesa)) { // Mesa activa
+            
+            if (fp.insertarPedido("", cantidad, idMesa, nombrePlato, idUsuario)) {
+                JOptionPane.showMessageDialog(null, "Pedido agregado correctamente");
+                mostrar("");
+            } else {
+                JOptionPane.showMessageDialog(null, "Error al agregar pedido");
+            }
+        } else { // Mesa inactiva
+            JOptionPane.showMessageDialog(null, "La mesa está inactiva. No se pueden agregar pedidos.");
         }
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void tblPedidosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPedidosMouseClicked
         // TODO add your handling code here:
-        int fila = tblPedidos.getSelectedRow();
-
-        txtCIUsuario.setText(tblPedidos.getValueAt(fila, 0).toString());
+        int fila = tblPedidos.rowAtPoint(evt.getPoint());
+        if (fila >= 0) {
+            cboRol.setSelectedItem(tblPedidos.getValueAt(fila, 6).toString());
+        }
     }//GEN-LAST:event_tblPedidosMouseClicked
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
         // TODO add your handling code here:
-        if (!txtCIUsuario.getText().isEmpty()) {
-            int idPedido = Integer.parseInt(txtCIUsuario.getText());
-            String nombrePlato = cboPlatos.getSelectedItem().toString();
-            int cantidad = Integer.parseInt(txtCantidad.getText());
-            int idMesa = Integer.parseInt(cboIdMesa.getSelectedItem().toString());
+        int filaSeleccionada = tblPedidos.getSelectedRow();
+        if (filaSeleccionada >= 0) {
+            int idPedido = Integer.parseInt(tblPedidos.getValueAt(filaSeleccionada, 0).toString()); // Obtener ID del pedido desde la tabla
+            String nombrePlato = cboPlatos.getSelectedItem().toString(); // Obtener nombre del plato seleccionado
+            int cantidad = Integer.parseInt(txtCantidad.getText()); // Obtener cantidad desde un campo de texto
+            int idMesa = Integer.parseInt(cboIdMesa.getSelectedItem().toString()); // Obtener ID de mesa seleccionada
 
+            MesasDatos m = new MesasDatos();
             FunPedidos fp = new FunPedidos();
-            if (fp.editarPedido(idPedido, nombrePlato, nombrePlato, cantidad, idMesa)) {
-                JOptionPane.showMessageDialog(null, "Pedido actualizado correctamente.");
-                mostrar("");
-            } else {
-                JOptionPane.showMessageDialog(null, "Error al actualizar el pedido.");
+            
+            String estadoMesa = fp.getEstadoMesa(idMesa);
+
+            if ("V".equals(estadoMesa)) { // Mesa activa
+                
+                if (fp.editarPedido(idPedido, "", nombrePlato, cantidad, idMesa, "", 1)) {
+                    JOptionPane.showMessageDialog(null, "Pedido editado correctamente");
+                    mostrar("");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Error al editar pedido");
+                }
+            } else { // Mesa inactiva
+                JOptionPane.showMessageDialog(null, "La mesa está inactiva. No se pueden editar pedidos.");
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Seleccione un pedido para actualizar.");
+            JOptionPane.showMessageDialog(null, "Seleccione un pedido para editar");
         }
     }//GEN-LAST:event_btnActualizarActionPerformed
-    private void cargarCombobox(JComboBox<String> c) {
-        DefaultComboBoxModel<String> combo = new DefaultComboBoxModel<>();
+    private void cargarCombobox(JComboBox c) {
+        DefaultComboBoxModel combo = new DefaultComboBoxModel();
         c.setModel(combo);
         FunPedidos fp = new FunPedidos();
         try {
             Statement st = cn.createStatement();
             ResultSet rs = st.executeQuery("SELECT nombre FROM plato");
             while (rs.next()) {
-                PedidosDatos p = new PedidosDatos();
-                p.setNombre(rs.getString(1)); // Ajustar según el nombre del método en PedidosDatos
-                fp.Agregar_Platos(p);
-                combo.addElement(p.getNombre());
+                Comidas co = new Comidas();
+                co.setNombre(rs.getString(1)); // Ajustar según el nombre del método en Comidas
+                fp.Agregar_Platos(co);
+                combo.addElement(co.getNombre());
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private void cargarCombobox2(JComboBox<String> c) {
-        DefaultComboBoxModel<String> combo = new DefaultComboBoxModel<>();
+    private void cargarCombobox2(JComboBox c) {
+        DefaultComboBoxModel combo = new DefaultComboBoxModel();
         c.setModel(combo);
         FunPedidos fp = new FunPedidos();
         try {
             Statement st = cn.createStatement();
             ResultSet rs = st.executeQuery("SELECT idmesa FROM mesa");
             while (rs.next()) {
-                MesasDatos m = new MesasDatos(); // Usa el constructor sin parámetros
+                MesasDatos m = new MesasDatos();
                 m.setIdMesa(rs.getInt(1));
                 fp.AgregarMesas(m);
-                combo.addElement(String.valueOf(m.getIdMesa()));
+                combo.addElement(m.getIdMesa());
             }
         } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
-    private void cargarCombobox3(JComboBox<String> c) {
-        DefaultComboBoxModel<String> combo = new DefaultComboBoxModel<>();
+    private void cargarCombobox3(JComboBox c) {
+        DefaultComboBoxModel combo = new DefaultComboBoxModel();
         c.setModel(combo);
         FunPedidos fp = new FunPedidos();
         try {
@@ -312,6 +349,24 @@ public class PedidosUI extends javax.swing.JInternalFrame {
                 r.setNombre(rs.getString(1));
                 fp.AgregarRoles(r);
                 combo.addElement(r.getNombre());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void cargarCombobox4(JComboBox c) {
+        DefaultComboBoxModel combo = new DefaultComboBoxModel();
+        c.setModel(combo);
+        FunPedidos fp = new FunPedidos();
+        try {
+            Statement st = cn.createStatement();
+            ResultSet rs = st.executeQuery("SELECT idusuario FROM usuario");
+            while (rs.next()) {
+                Usuario u = new Usuario();
+                u.setId_usuario(rs.getInt(1));
+                fp.AgregarIDUsuario(u);
+                combo.addElement(u.getId_usuario());
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -329,13 +384,15 @@ public class PedidosUI extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Error al mostrar datos" + e);
         }
     }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JComboBox<String> cboIdMesa;
     private javax.swing.JComboBox<String> cboPlatos;
-    private javax.swing.JComboBox<String> cboRoles;
+    private javax.swing.JComboBox<String> cboRol;
+    private javax.swing.JComboBox<String> cboUsuario;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -344,7 +401,6 @@ public class PedidosUI extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblregistros;
     private javax.swing.JTable tblPedidos;
-    private javax.swing.JTextField txtCIUsuario;
     private javax.swing.JTextField txtCantidad;
     // End of variables declaration//GEN-END:variables
 }

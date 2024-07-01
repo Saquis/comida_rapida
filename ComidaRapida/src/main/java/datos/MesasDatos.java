@@ -1,7 +1,7 @@
 package datos;
 
 public class MesasDatos {
-    private int idMesa;
+    private int IdMesa;
     private int capacidad;
     private String estado;
 
@@ -9,18 +9,18 @@ public class MesasDatos {
     public MesasDatos() {
     }
 
-    public MesasDatos(int idMesa, int capacidad, String estado) {
-        this.idMesa = idMesa;
+    public MesasDatos(int IdMesa, int capacidad, String estado) {
+        this.IdMesa = IdMesa;
         this.capacidad = capacidad;
         this.estado = estado;
     }
 
     public int getIdMesa() {
-        return idMesa;
+        return IdMesa;
     }
 
     public void setIdMesa(int idMesa) {
-        this.idMesa = idMesa;
+        this.IdMesa = idMesa;
     }
 
     public int getCapacidad() {
@@ -38,8 +38,7 @@ public class MesasDatos {
     public void setEstado(String estado) {
         this.estado = estado;
     }
+    
+    
+    
 }
-
-
-
-

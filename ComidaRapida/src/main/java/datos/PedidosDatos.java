@@ -4,14 +4,19 @@
  */
 package datos;
 
+import java.awt.List;
+import java.sql.Date;
+import java.util.ArrayList;
+
 public class PedidosDatos {
+
     private int idPedido;
     private java.sql.Date fecha;
     private int idUsuario;
     private int estado;
     private String nombre;  // Agregar atributo nombre
-
-    public PedidosDatos() {}
+    public PedidosDatos() {
+    }
 
     public PedidosDatos(int idPedido, java.sql.Date fecha, int idUsuario, int estado, String nombre) {
         this.idPedido = idPedido;
@@ -29,11 +34,11 @@ public class PedidosDatos {
         this.idPedido = idPedido;
     }
 
-    public java.sql.Date getFecha() {
+    public Date getFecha() {
         return fecha;
     }
 
-    public void setFecha(java.sql.Date fecha) {
+    public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
 
@@ -53,15 +58,12 @@ public class PedidosDatos {
         this.estado = estado;
     }
 
-    public String getNombre() {  // Método getter para nombre
+    public String getNombre() {
         return nombre;
     }
 
-    public void setNombre(String nombre) {  // Método setter para nombre
+    public void setNombre(String nombre) {
         this.nombre = nombre;
     }
+
 }
-
-
-
-
