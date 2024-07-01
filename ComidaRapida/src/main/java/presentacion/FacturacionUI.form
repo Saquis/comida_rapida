@@ -44,8 +44,6 @@
                   </Group>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="lblIdPedido" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblFechaPedido" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="lblEstadoPedido" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
@@ -63,6 +61,10 @@
                                   <Component id="txtNombreCliente" max="32767" attributes="0"/>
                                   <Component id="jcbjMesaAsignada" pref="166" max="32767" attributes="0"/>
                               </Group>
+                          </Group>
+                          <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                              <Component id="lblIdPedido" alignment="0" max="32767" attributes="0"/>
+                              <Component id="lblFechaPedido" alignment="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>

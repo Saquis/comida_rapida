@@ -5,6 +5,10 @@ public class MesasDatos {
     private int capacidad;
     private String estado;
 
+    // Constructor sin parámetros
+    public MesasDatos() {
+    }
+
     public MesasDatos(int idMesa, int capacidad, String estado) {
         this.idMesa = idMesa;
         this.capacidad = capacidad;
@@ -35,6 +39,7 @@ public class MesasDatos {
         this.estado = estado;
     }
 }
+
 
 
 

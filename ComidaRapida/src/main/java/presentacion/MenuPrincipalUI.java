@@ -10,10 +10,11 @@ public class MenuPrincipalUI extends javax.swing.JFrame {
     private UsuarioUI usuario;
     private ComidasUI comidas;
     private BebidasUI bebidas;
+    private PedidosUI pedidos;
 
     public MenuPrincipalUI() {
         initComponents();
-        //  mnuMesas = new javax.swing.JMenu();
+        
     }
 
     /**
@@ -37,6 +38,7 @@ public class MenuPrincipalUI extends javax.swing.JFrame {
         mnuComida = new javax.swing.JMenuItem();
         mnuBebidas = new javax.swing.JMenuItem();
         mnuPedidos = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
         mnuMesas = new javax.swing.JMenu();
         mnuAdminMesas = new javax.swing.JMenuItem();
         mnuFacturacion = new javax.swing.JMenu();
@@ -120,6 +122,20 @@ public class MenuPrincipalUI extends javax.swing.JFrame {
 
         mnuPedidos.setText("Pedidos");
         mnuPedidos.setEnabled(false);
+        mnuPedidos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuPedidosActionPerformed(evt);
+            }
+        });
+
+        jMenuItem1.setText("Ver Pedidos");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        mnuPedidos.add(jMenuItem1);
+
         jMenuBar1.add(mnuPedidos);
 
         mnuMesas.setText("Mesas");
@@ -218,7 +234,7 @@ public class MenuPrincipalUI extends javax.swing.JFrame {
         mnuPedidos.setEnabled(false);
         mnuMesas.setEnabled(false);
         mnuFacturacion.setEnabled(false);
-        
+
         JOptionPane.showMessageDialog(this, "Usuario se desconectó correctamente.");
     }//GEN-LAST:event_mnuCerrarSesionActionPerformed
 
@@ -252,6 +268,26 @@ public class MenuPrincipalUI extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }//GEN-LAST:event_mnuBebidasActionPerformed
+
+    private void mnuPedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuPedidosActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_mnuPedidosActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        if (pedidos == null || pedidos.isClosed()) {
+            pedidos = new PedidosUI();
+            escritorio.add(pedidos);
+            pedidos.setVisible(true);
+        } else {
+            try {
+                pedidos.setSelected(true);
+            } catch (java.beans.PropertyVetoException e) {
+                e.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -292,7 +328,7 @@ public class MenuPrincipalUI extends javax.swing.JFrame {
     public void habilitarMenuIngresar(boolean habilitar) {
         mnuIngresar.setEnabled(habilitar);
     }
-    
+
     public void habilitarMenuCerrarSesion(boolean habilitar) {
         mnuCerrarSesion.setEnabled(habilitar);
     }
@@ -320,6 +356,7 @@ public class MenuPrincipalUI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane escritorio;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem mnuAdminMesas;
     private javax.swing.JMenuItem mnuAdminUser;
     private javax.swing.JMenuItem mnuBebidas;
