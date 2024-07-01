@@ -61,36 +61,54 @@ public class FunPedidos {
 
     public DefaultTableModel mostrar(String buscar) {
         DefaultTableModel modelo;
-        String[] titulos = {"ID PEDIDO", "ID MESA", "FECHA Y HORA", "ESTADO"};
-        String[] registro = new String[4];
+        String[] titulos = {"ID PEDIDO", "ID USUARIO", "NOMBRE COMPLETO", "NOMBRE PLATO", "CANTIDAD PLATOS", "ID MESA", "FECHA DEL PEDIDO", "ESTADO"};
+        String[] registro = new String[8];
         totalRegistro = 0;
         modelo = new DefaultTableModel(null, titulos);
-        sql = "SELECT p.idpedido AS idpedido,"
-                + " pm.idmesa AS idmesa,"
-                + " p.fecha_pedido AS fecha_pedido,"
-                + " p.estado AS estado"
-                + " FROM pedido p"
-                + " JOIN pedido_mesa pm ON p.idpedido = pm.idpedido"
-                + " WHERE pm.idmesa LIKE '%" + buscar + "%'";
+        sql = "SELECT p.idpedido AS \"idpedido\",\n"
+                + "    u.idusuario AS \"idusuario\",\n"
+                + "    CONCAT(u.nombres, ' ', u.apellidos) AS \"nombreCompleto\",\n"
+                + "    pl.nombre AS \"nombreplato\",\n"
+                + "    dp.cantidad AS \"cantidad\",\n"
+                + "    pm.idmesa AS \"idmesa\",\n"
+                + "    p.fecha_pedido AS \"fecha_pedido\",\n"
+                + "    p.estado AS \"estado\"\n"
+                + "FROM \n"
+                + "    pedido p\n"
+                + "JOIN \n"
+                + "    usuario u ON p.idusuario = u.idusuario\n"
+                + "JOIN \n"
+                + "    detalle_pedido dp ON p.idpedido = dp.idpedido\n"
+                + "JOIN \n"
+                + "    plato pl ON dp.idplato = pl.idplato\n"
+                + "JOIN \n"
+                + "    pedido_mesa pm ON p.idpedido = pm.idpedido;";
         try {
-            PreparedStatement ps = cn.prepareStatement(sql);
-            ResultSet resultSet = ps.executeQuery();
+            Statement st = cn.createStatement();
+            ResultSet resultSet = st.executeQuery(sql);
             while (resultSet.next()) {
                 registro[0] = resultSet.getString("idpedido");
-                registro[1] = resultSet.getString("idmesa");
-                Timestamp fechaPedido = resultSet.getTimestamp("fecha_pedido");
+                registro[1] = resultSet.getString("idusuario");
+                registro[2] = resultSet.getString("nombreCompleto");
+                registro[3] = resultSet.getString("nombreplato");
+                registro[4] = resultSet.getString("cantidad");
+                registro[5] = resultSet.getString("idmesa");
+                Date fechaPedido = resultSet.getDate("fecha_pedido");
                 if (fechaPedido != null) {
-                    registro[2] = fechaPedido.toString();
+                    registro[6] = fechaPedido.toString(); // Convierte la fecha a string
                 } else {
-                    registro[2] = "N/A";
+                    registro[6] = "N/A"; // Maneja el caso de fechas nulas
                 }
-                registro[3] = resultSet.getString("estado");
-                totalRegistro++;
+                registro[7] = resultSet.getString("estado");
                 modelo.addRow(registro);
+
+                // Agregar impresión para depuración
+                System.out.println("Pedido: " + resultSet.getString("idpedido") + ", Usuario: " + resultSet.getString("idusuario") + ", Plato: " + resultSet.getString("nombreplato"));
             }
             return modelo;
-        } catch (SQLException e) {
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error al mostrar la tabla " + e);
+            e.printStackTrace(); // Añadir traza de la excepción para depuración
             return null;
         }
     }
@@ -318,7 +336,7 @@ public class FunPedidos {
         if(idMesa == 1) {
             return "V"; // Mesa activa
         }else {
-        return "L"; // Mesa inactiva
-    }
+            return "L"; // Mesa inactiva
+        }
     }
 }

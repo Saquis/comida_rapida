@@ -14,6 +14,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import logica.Conexion;
@@ -41,6 +42,11 @@ public class PedidosUI extends javax.swing.JInternalFrame {
         cargarCombobox2(cboIdMesa);
         cargarCombobox3(cboRol);
         cargarCombobox4(cboUsuario);
+        setClosable(true);
+        setMaximizable(true);
+        setIconifiable(true);
+        setResizable(true);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
 
     /**
@@ -375,13 +381,14 @@ public class PedidosUI extends javax.swing.JInternalFrame {
 
     void mostrar(String buscar) {
         try {
-            DefaultTableModel modelo = new DefaultTableModel();
+            DefaultTableModel modelo;
             FunPedidos fp = new FunPedidos();
             modelo = fp.mostrar(buscar);
             tblPedidos.setModel(modelo);
-            lblregistros.setText("TOTAL DE REGISTROS: " + Integer.toHexString(fp.totalRegistro + 1));
+            lblregistros.setText("TOTAL DE REGISTROS: " + modelo.getRowCount());
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error al mostrar datos" + e);
+            JOptionPane.showMessageDialog(null, "Error al mostrar datos: " + e);
+            e.printStackTrace();
         }
     }
 
